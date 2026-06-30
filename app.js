@@ -3,15 +3,17 @@
 // ---------------------------------------------------------------
 
 const PRODUCTS = [
+  
   {
-    id: "sungudi-pink-mustard",
-    name: "Sungudi Tie-Dye Saree",
-    material: "Pure Cotton (Sungudi)",
-    uses: "Daily wear, festive wear",
-    price: 800,
-    mrp: 1100,
-    image: "images/sungudi-pink-mustard.jpg"
-  },
+  id: "rani-pink-soft-silk-jacquard",
+  name: "Rani Pink Soft Silk Jacquard Saree",
+  material: "Soft Silk Jacquard with Silver Zari",
+  uses: "Wedding wear, festive wear, party wear",
+  price: 1850,
+  mrp: 2499,
+  image: "images/rani-pink-soft-silk-jacquard.jpg"
+},
+   
   {
     id: "linen-emerald-gold",
     name: "Linen Zari Border Saree",
