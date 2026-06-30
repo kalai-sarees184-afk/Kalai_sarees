@@ -11,7 +11,7 @@ const PRODUCTS = [
   uses: "Wedding wear, festive wear, party wear",
   price: 1850,
   mrp: 2499,
-  image: "images/rani-pink-soft-silk-jacquard.jpg"
+  image: "https://github.com/kalai-sarees184-afk/sareeimage/blob/main/sarrreee.webp?raw=true"
 },
    
   {
