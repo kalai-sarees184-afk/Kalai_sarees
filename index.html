@@ -132,6 +132,27 @@
   <a href="#shop" class="sticky-cta-btn">🛍 Shop the collection</a>
 </div>
 
+<!-- Hidden Google Form -->
+<form id="google-sheet-form"
+      action="https://script.google.com/macros/s/AKfycbwr48Otyqcinq8FVdC6QFnwWV2zmHhiffoizJputeDzRceycs7oUezS7UEgEk2Xg1eniQ/exec"
+      method="POST"
+      target="hidden_iframe"
+      style="display:none;">
+
+  <input type="text" name="name" id="g-name">
+  <input type="text" name="phone" id="g-phone">
+  <input type="text" name="address" id="g-address">
+  <input type="text" name="product" id="g-product">
+  <input type="text" name="price" id="g-price">
+  <input type="text" name="paymentMode" id="g-payment">
+
+</form>
+
+<iframe
+    name="hidden_iframe"
+    style="display:none;">
+</iframe>
+
 <script src="app.js"></script>
 </body>
 </html>
