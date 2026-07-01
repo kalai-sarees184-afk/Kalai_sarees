@@ -182,36 +182,17 @@ async function handleOrderSubmit(e) {
     paymentMode: "Cash on Delivery",
     orderedAt: new Date().toISOString()
   };
+  // Fill the hidden Google Form
+document.getElementById("g-name").value = order.name;
+document.getElementById("g-phone").value = order.phone;
+document.getElementById("g-address").value = order.address;
+document.getElementById("g-product").value = order.product;
+document.getElementById("g-price").value = order.price;
+document.getElementById("g-payment").value = order.paymentMode;
 
-async function sendOrderToGoogleSheet(order){
+// Submit the hidden Google Form
+document.getElementById("googleForm").submit();
 
-    try{
-
-        await fetch("https://script.google.com/macros/s/AKfycbwr48Otyqcinq8FVdC6QFnwWV2zmHhiffoizJputeDzRceycs7oUezS7UEgEk2Xg1eniQ/exec",{
-
-            method:"POST",
-
-            mode:"no-cors",
-
-            headers:{
-                "Content-Type":"application/json"
-            },
-
-            body:JSON.stringify(order)
-
-        });
-
-        return true;
-
-    }catch(e){
-
-        console.error(e);
-
-        return false;
-
-    }
-
-}
 
   document.getElementById("order-form").hidden = true;
   document.getElementById("modal-success").hidden = false;
