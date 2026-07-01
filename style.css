@@ -187,10 +187,14 @@ h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:-0.01em;
   background:#f3e4e6;
   overflow:hidden;
 }
+
 .card-swatch img{
-  width:100%;height:100%;
+  width:100%;
+  height:100%;
   object-fit:cover;
   display:block;
+  transition:transform .25s ease;
+  cursor:zoom-in;
 }
 .card-tier{
     background: transparent;
