@@ -88,8 +88,9 @@ h1,h2,h3{font-family:var(--font-display);font-weight:600;letter-spacing:-0.01em;
   overflow:hidden;
 }
 .hero-bg{
-  position:absolute;inset:0;
-  background:url('temple-bg.png') center 30%/cover no-repeat;
+  position:absolute;
+  inset:0;
+  background:url('images/temple-bg.jpg') right center/cover no-repeat;
   filter:saturate(1.05);
 }
 .hero-veil{
