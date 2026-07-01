@@ -162,7 +162,7 @@ function validateForm(name, phone, address, accepted) {
   return valid;
 }
 
-function handleOrderSubmit(e) {
+async function handleOrderSubmit(e) {
   e.preventDefault();
 
   const name = document.getElementById("cust-name").value;
@@ -183,7 +183,12 @@ function handleOrderSubmit(e) {
     orderedAt: new Date().toISOString()
   };
 
-  saveOrderLocally(order);
+const success = await sendOrderToGoogleSheet(order);
+
+if (!success) {
+    alert("Unable to submit order.");
+    return;
+}
 
   document.getElementById("order-form").hidden = true;
   document.getElementById("modal-success").hidden = false;
@@ -193,7 +198,8 @@ function handleOrderSubmit(e) {
 
 // Stores the order in the browser so the shop owner can review it later
 // (placeholder for a real backend / WhatsApp / Google Sheet integration)
-function saveOrderLocally(order) {
+async function sendOrderToGoogleSheet(order){
+
   try {
     const existing = JSON.parse(localStorage.getItem("kalai_orders") || "[]");
     existing.push(order);
