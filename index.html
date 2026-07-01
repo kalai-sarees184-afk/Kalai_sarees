@@ -133,24 +133,31 @@
 </div>
 
 <!-- Hidden Google Form -->
-<form id="google-sheet-form"
-      action="https://script.google.com/macros/s/AKfycbwr48Otyqcinq8FVdC6QFnwWV2zmHhiffoizJputeDzRceycs7oUezS7UEgEk2Xg1eniQ/exec"
-      method="POST"
-      target="hidden_iframe"
-      style="display:none;">
+<script src="app.js"></script>
+  <!-- Hidden Google Form -->
+<form id="googleForm"
+action="https://docs.google.com/forms/d/e/1FAIpQLSdC0HX6ZRMZdo9deL2ZRlkCeX3AsYCgWDT2AmRPve4L-rWZLA/formResponse"
+method="POST"
+target="hidden_iframe"
+style="display:none;">
 
-  <input type="text" name="name" id="g-name">
-  <input type="text" name="phone" id="g-phone">
-  <input type="text" name="address" id="g-address">
-  <input type="text" name="product" id="g-product">
-  <input type="text" name="price" id="g-price">
-  <input type="text" name="paymentMode" id="g-payment">
+<input type="text" name="entry.467886700" id="g-name">
+
+<input type="text" name="entry.1158099472" id="g-phone">
+
+<textarea name="entry.744431464" id="g-address"></textarea>
+
+<input type="text" name="entry.1947372599" id="g-product">
+
+<input type="text" name="entry.292443153" id="g-price">
+
+<input type="text" name="entry.1933009759" id="g-payment">
 
 </form>
 
 <iframe
-    name="hidden_iframe"
-    style="display:none;">
+name="hidden_iframe"
+style="display:none;">
 </iframe>
 
 <script src="app.js"></script>
