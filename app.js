@@ -88,8 +88,12 @@ function renderProducts() {
     <article class="card">
       <div class="card-tier"></div>
       <div class="card-swatch">
-        <img src="${p.image}" alt="${p.name}" loading="lazy"
-             onerror="this.onerror=null;this.src='images/placeholder-saree.jpg';">
+       <img src="${p.image}"
+     alt="${p.name}"
+     loading="lazy"
+     onmousemove="zoomImage(event,this)"
+     onmouseleave="hideZoom(this)"
+     onerror="this.onerror=null;this.src='images/placeholder-saree.jpg';">
       </div>
       <div class="card-body">
         <h3>${p.name}</h3>
