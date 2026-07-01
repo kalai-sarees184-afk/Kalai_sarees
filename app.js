@@ -183,11 +183,34 @@ async function handleOrderSubmit(e) {
     orderedAt: new Date().toISOString()
   };
 
-const success = await sendOrderToGoogleSheet(order);
+async function sendOrderToGoogleSheet(order){
 
-if (!success) {
-    alert("Unable to submit order.");
-    return;
+    try{
+
+        await fetch("https://script.google.com/macros/s/AKfycbwr48Otyqcinq8FVdC6QFnwWV2zmHhiffoizJputeDzRceycs7oUezS7UEgEk2Xg1eniQ/exec",{
+
+            method:"POST",
+
+            mode:"no-cors",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify(order)
+
+        });
+
+        return true;
+
+    }catch(e){
+
+        console.error(e);
+
+        return false;
+
+    }
+
 }
 
   document.getElementById("order-form").hidden = true;
