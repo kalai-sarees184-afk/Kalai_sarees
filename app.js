@@ -198,15 +198,35 @@ if (!success) {
 
 // Stores the order in the browser so the shop owner can review it later
 // (placeholder for a real backend / WhatsApp / Google Sheet integration)
-async function sendOrderToGoogleSheet(order){
+async function sendOrderToGoogleSheet(order) {
 
   try {
-    const existing = JSON.parse(localStorage.getItem("kalai_orders") || "[]");
-    existing.push(order);
-    localStorage.setItem("kalai_orders", JSON.stringify(existing));
-  } catch (err) {
-    console.warn("Could not save order locally:", err);
+
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycbwr48Otyqcinq8FVdC6QFnwWV2zmHhiffoizJputeDzRceycs7oUezS7UEgEk2Xg1eniQ/exec",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(order)
+      }
+    );
+
+    const result = await response.json();
+
+    console.log(result);
+
+    return true;
+
+  } catch (error) {
+
+    console.error(error);
+
+    return false;
+
   }
+
 }
 
 // ---------- Mobile menu ----------
