@@ -100,11 +100,35 @@ async function submitOrderToGoogleForm(order) {
     });
     // With mode: "no-cors" the response is always "opaque" — we can't
     // inspect status/body. If fetch() didn't throw, the request was sent.
-    console.log("Order sent to Google Form.");
+    console.log("Order sent to Google Form (fetch).");
     return true;
   } catch (err) {
-    // This only fires on genuine network failure (offline, blocked, etc.)
-    console.error("Google Form submission failed:", err);
+    // Genuine network failure, or fetch blocked by a browser
+    // extension/CSP. Fall back to the hidden iframe form as a
+    // second attempt so the order still has a chance to go through.
+    console.error("fetch() submission failed, trying hidden form fallback:", err);
+    return submitViaHiddenForm(order);
+  }
+}
+
+function submitViaHiddenForm(order) {
+  const form = document.getElementById("googleForm");
+  if (!form) {
+    console.error("Hidden fallback form not found in the page.");
+    return false;
+  }
+  try {
+    document.getElementById("g-name").value = order.name;
+    document.getElementById("g-phone").value = order.phone;
+    document.getElementById("g-address").value = order.address;
+    document.getElementById("g-product").value = order.product;
+    document.getElementById("g-price").value = String(order.price);
+    document.getElementById("g-payment").value = order.paymentMode;
+    form.submit();
+    console.log("Order sent to Google Form (hidden form fallback).");
+    return true;
+  } catch (err) {
+    console.error("Hidden form fallback also failed:", err);
     return false;
   }
 }
