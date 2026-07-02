@@ -11,51 +11,6 @@ const PRODUCTS = [
     price: 1850,
     mrp: 2499,
     image: "https://github.com/kalai-sarees184-afk/sareeimage/blob/main/sarrreee.webp?raw=true"
-  },
-  {
-    id: "linen-emerald-gold",
-    name: "Linen Zari Border Saree",
-    material: "Linen with Zari Border",
-    uses: "Office wear, festive wear",
-    price: 1450,
-    mrp: 1900,
-    image: "images/linen-emerald-gold.jpg"
-  },
-  {
-    id: "floral-lavender",
-    name: "Soft Cotton Floral Print",
-    material: "Soft Cotton",
-    uses: "Daily wear, casual outings",
-    price: 950,
-    mrp: 1300,
-    image: "images/floral-lavender.jpg"
-  },
-  {
-    id: "blue-temple-zari",
-    name: "Temple Border Silk-Cotton",
-    material: "Silk-Cotton with Temple Border",
-    uses: "Festive wear, temple visits",
-    price: 1750,
-    mrp: 2300,
-    image: "images/blue-temple-zari.jpg"
-  },
-  {
-    id: "maroon-pattu",
-    name: "Festive Pattu Saree",
-    material: "Pure Pattu Silk",
-    uses: "Weddings, special occasions",
-    price: 2200,
-    mrp: 2900,
-    image: "images/maroon-pattu.jpg"
-  },
-  {
-    id: "checked-pink-rose",
-    name: "Checked Cotton with Rose Print",
-    material: "Cotton",
-    uses: "Daily wear, casual wear",
-    price: 850,
-    mrp: 1100,
-    image: "images/checked-pink-rose.jpg"
   }
 ];
 
