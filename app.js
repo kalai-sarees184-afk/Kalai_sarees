@@ -192,6 +192,7 @@ document.getElementById("g-payment").value = order.paymentMode;
 
 // Submit the hidden Google Form
 document.getElementById("googleForm").submit();
+  console.log("Google Form Submitted");
 
 
   document.getElementById("order-form").hidden = true;
@@ -202,19 +203,7 @@ document.getElementById("googleForm").submit();
 
 // Stores the order in the browser so the shop owner can review it later
 // (placeholder for a real backend / WhatsApp / Google Sheet integration)
-async function sendOrderToGoogleSheet(order) {
 
-  try {
-
-    const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbwr48Otyqcinq8FVdC6QFnwWV2zmHhiffoizJputeDzRceycs7oUezS7UEgEk2Xg1eniQ/exec",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(order)
-      }
     );
 
     const result = await response.json();
