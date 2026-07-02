@@ -190,7 +190,13 @@ document.getElementById("g-product").value = order.product;
 document.getElementById("g-price").value = order.price;
 document.getElementById("g-payment").value = order.paymentMode;
 
-// Submit the hidden Google Form
+console.log(document.getElementById("g-name").value);
+console.log(document.getElementById("g-phone").value);
+console.log(document.getElementById("g-address").value);
+console.log(document.getElementById("g-product").value);
+console.log(document.getElementById("g-price").value);
+console.log(document.getElementById("g-payment").value);
+  // Submit the hidden Google Form
 document.getElementById("googleForm").submit();
   console.log("Google Form Submitted");
 
