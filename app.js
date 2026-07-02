@@ -204,23 +204,7 @@ document.getElementById("googleForm").submit();
 // Stores the order in the browser so the shop owner can review it later
 // (placeholder for a real backend / WhatsApp / Google Sheet integration)
 
-    );
-
-    const result = await response.json();
-
-    console.log(result);
-
-    return true;
-
-  } catch (error) {
-
-    console.error(error);
-
-    return false;
-
-  }
-
-}
+   
 
 // ---------- Mobile menu ----------
 function initMobileMenu() {
