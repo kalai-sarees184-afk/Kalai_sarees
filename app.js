@@ -3,17 +3,15 @@
 // ---------------------------------------------------------------
 
 const PRODUCTS = [
-  
   {
-  id: "rani-pink-soft-silk-jacquard",
-  name: "Rani Pink Soft Silk Jacquard Saree",
-  material: "Soft Silk Jacquard with Silver Zari",
-  uses: "Wedding wear, festive wear, party wear",
-  price: 1850,
-  mrp: 2499,
-  image: "https://github.com/kalai-sarees184-afk/sareeimage/blob/main/sarrreee.webp?raw=true"
-},
-   
+    id: "rani-pink-soft-silk-jacquard",
+    name: "Rani Pink Soft Silk Jacquard Saree",
+    material: "Soft Silk Jacquard with Silver Zari",
+    uses: "Wedding wear, festive wear, party wear",
+    price: 1850,
+    mrp: 2499,
+    image: "https://github.com/kalai-sarees184-afk/sareeimage/blob/main/sarrreee.webp?raw=true"
+  },
   {
     id: "linen-emerald-gold",
     name: "Linen Zari Border Saree",
@@ -60,16 +58,64 @@ const PRODUCTS = [
     image: "images/checked-pink-rose.jpg"
   }
 ];
+
+// ---------------------------------------------------------------
+// Google Form integration
+// ---------------------------------------------------------------
+// This POSTs directly to Google's formResponse endpoint using fetch().
+// mode: "no-cors" is required because Google Forms doesn't send CORS
+// headers back — this means we can't read the response, but the
+// submission itself still goes through and lands in your Sheet.
+// This approach needs NO hidden <form> or hidden <input> elements
+// in index.html, which removes the most common source of silent
+// failures (mismatched entry IDs, missing target iframe, etc).
+
+const GOOGLE_FORM_ACTION_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSdC0HX6ZRMZdo9deL2ZRlkCeX3AsYCgWDT2AmRPve4L-rWZLA/formResponse";
+
+const GOOGLE_FORM_ENTRY_IDS = {
+  name: "entry.467886700",
+  phone: "entry.1158099472",
+  address: "entry.744431464",
+  product: "entry.1947372599",
+  price: "entry.292443153",
+  payment: "entry.1933009759"
+};
+
+async function submitOrderToGoogleForm(order) {
+  const formData = new URLSearchParams();
+  formData.append(GOOGLE_FORM_ENTRY_IDS.name, order.name);
+  formData.append(GOOGLE_FORM_ENTRY_IDS.phone, order.phone);
+  formData.append(GOOGLE_FORM_ENTRY_IDS.address, order.address);
+  formData.append(GOOGLE_FORM_ENTRY_IDS.product, order.product);
+  formData.append(GOOGLE_FORM_ENTRY_IDS.price, String(order.price));
+  formData.append(GOOGLE_FORM_ENTRY_IDS.payment, order.paymentMode);
+
+  try {
+    await fetch(GOOGLE_FORM_ACTION_URL, {
+      method: "POST",
+      mode: "no-cors", // Google Forms does not return CORS headers
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: formData.toString()
+    });
+    // With mode: "no-cors" the response is always "opaque" — we can't
+    // inspect status/body. If fetch() didn't throw, the request was sent.
+    console.log("Order sent to Google Form.");
+    return true;
+  } catch (err) {
+    // This only fires on genuine network failure (offline, blocked, etc.)
+    console.error("Google Form submission failed:", err);
+    return false;
+  }
+}
+
 // ---------- Image Zoom ----------
 function zoomImage(event, img) {
   const rect = img.getBoundingClientRect();
-
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
-
   const xPercent = (x / rect.width) * 100;
   const yPercent = (y / rect.height) * 100;
-
   img.style.transformOrigin = `${xPercent}% ${yPercent}%`;
   img.style.transform = "scale(2)";
 }
@@ -84,6 +130,8 @@ let currentProduct = null;
 // ---------- Render product grid ----------
 function renderProducts() {
   const grid = document.getElementById("product-grid");
+  if (!grid) return;
+
   grid.innerHTML = PRODUCTS.map(p => `
     <article class="card">
       <div class="card-tier"></div>
@@ -134,7 +182,8 @@ function closeModal() {
 
 function clearErrors() {
   ["err-name", "err-phone", "err-address"].forEach(id => {
-    document.getElementById(id).textContent = "";
+    const el = document.getElementById(id);
+    if (el) el.textContent = "";
   });
 }
 
@@ -165,6 +214,7 @@ function validateForm(name, phone, address, accepted) {
 async function handleOrderSubmit(e) {
   e.preventDefault();
 
+  const submitBtn = e.target.querySelector('button[type="submit"]');
   const name = document.getElementById("cust-name").value;
   const phone = document.getElementById("cust-phone").value;
   const address = document.getElementById("cust-address").value;
@@ -172,7 +222,6 @@ async function handleOrderSubmit(e) {
 
   if (!validateForm(name, phone, address, accepted)) return;
 
-  // Build a simple order record (in a real shop this would POST to a server)
   const order = {
     product: currentProduct.name,
     price: currentProduct.price,
@@ -182,35 +231,26 @@ async function handleOrderSubmit(e) {
     paymentMode: "Cash on Delivery",
     orderedAt: new Date().toISOString()
   };
-  // Fill the hidden Google Form
-document.getElementById("g-name").value = order.name;
-document.getElementById("g-phone").value = order.phone;
-document.getElementById("g-address").value = order.address;
-document.getElementById("g-product").value = order.product;
-document.getElementById("g-price").value = order.price;
-document.getElementById("g-payment").value = order.paymentMode;
 
-console.log(document.getElementById("g-name").value);
-console.log(document.getElementById("g-phone").value);
-console.log(document.getElementById("g-address").value);
-console.log(document.getElementById("g-product").value);
-console.log(document.getElementById("g-price").value);
-console.log(document.getElementById("g-payment").value);
-  // Submit the hidden Google Form
-document.getElementById("googleForm").submit();
-  console.log("Google Form Submitted");
+  // Disable the button while we send the order so the user can't
+  // double-submit while the request is in flight.
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Placing order...";
+  }
 
+  await submitOrderToGoogleForm(order);
+
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Confirm Order";
+  }
 
   document.getElementById("order-form").hidden = true;
   document.getElementById("modal-success").hidden = false;
   document.getElementById("success-summary").textContent =
     `${order.product} for ${order.name}, ₹${order.price} payable by cash on delivery at: ${order.address}.`;
 }
-
-// Stores the order in the browser so the shop owner can review it later
-// (placeholder for a real backend / WhatsApp / Google Sheet integration)
-
-   
 
 // ---------- Mobile menu ----------
 function initMobileMenu() {
