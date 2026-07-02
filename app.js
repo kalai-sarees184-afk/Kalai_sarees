@@ -71,15 +71,15 @@ const PRODUCTS = [
 // failures (mismatched entry IDs, missing target iframe, etc).
 
 const GOOGLE_FORM_ACTION_URL =
-  "https://docs.google.com/forms/d/e/1FAIpQLSdC0HX6ZRMZdo9deL2ZRlkCeX3AsYCgWDT2AmRPve4L-rWZLA/formResponse";
+  "https://docs.google.com/forms/d/e/1FAIpQLSf-KGhlj2Zq-M78UriFjGfOokgQU-NcK2xOvf2TEx1ub4MnUA/formResponse";
 
 const GOOGLE_FORM_ENTRY_IDS = {
-  name: "entry.467886700",
-  phone: "entry.1158099472",
-  address: "entry.744431464",
-  product: "entry.1947372599",
-  price: "entry.292443153",
-  payment: "entry.1933009759"
+  name: "entry.1359770570",
+  phone: "entry.179541687",
+  address: "entry.1214063077",
+  product: "entry.288159311",
+  price: "entry.2144230775",
+  payment: "entry.275138210"
 };
 
 async function submitOrderToGoogleForm(order) {
